@@ -1,0 +1,134 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 3.135.87.110...
+* TCP_NODELAY set
+* Connected to n60z2wh6i3.execute-api.us-east-2.amazonaws.com (3.135.87.110) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [98 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [4869 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: CN=*.execute-api.us-east-2.amazonaws.com
+*  start date: Nov 20 00:00:00 2019 GMT
+*  expire date: Dec 20 12:00:00 2020 GMT
+*  subjectAltName: host "n60z2wh6i3.execute-api.us-east-2.amazonaws.com" matched cert's "*.execute-api.us-east-2.amazonaws.com"
+*  issuer: C=US; O=Amazon; OU=Server CA 1B; CN=Amazon
+*  SSL certificate verify ok.
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+} [5 bytes data]
+* Using Stream ID: 1 (easy handle 0x7ffff6723580)
+} [5 bytes data]
+> POST /Prod/http-api HTTP/2
+> Host: n60z2wh6i3.execute-api.us-east-2.amazonaws.com
+> User-Agent: curl/7.58.0
+> Accept: */*
+> Content-Type:application/something
+> 
+{ [5 bytes data]
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+} [5 bytes data]
+< HTTP/2 400 
+< date: Fri, 27 Mar 2020 07:25:17 GMT
+< content-type: text/plain; charset=utf-8
+< content-length: 27
+< apigw-requestid: KCeOpjy6CYcEPCg=
+< 
+{ [27 bytes data]
+100    27  100    27    0     0     70      0 --:--:-- --:--:-- --:--:--    70
+* Connection #0 to host n60z2wh6i3.execute-api.us-east-2.amazonaws.com left intact
+Unable to find Content-Type
+============================================================
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0*   Trying 13.249.43.122...
+* TCP_NODELAY set
+* Connected to dsptg9q9hb.execute-api.us-east-2.amazonaws.com (13.249.43.122) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* successfully set certificate verify locations:
+*   CAfile: /etc/ssl/certs/ca-certificates.crt
+  CApath: /etc/ssl/certs
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [100 bytes data]
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+{ [4870 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+{ [333 bytes data]
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+{ [4 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+} [70 bytes data]
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+} [1 bytes data]
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+} [16 bytes data]
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+{ [16 bytes data]
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: CN=*.execute-api.us-east-2.amazonaws.com
+*  start date: Mar  2 00:00:00 2020 GMT
+*  expire date: Apr  2 12:00:00 2021 GMT
+*  subjectAltName: host "dsptg9q9hb.execute-api.us-east-2.amazonaws.com" matched cert's "*.execute-api.us-east-2.amazonaws.com"
+*  issuer: C=US; O=Amazon; OU=Server CA 1B; CN=Amazon
+*  SSL certificate verify ok.
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+} [5 bytes data]
+* Using Stream ID: 1 (easy handle 0x7fffd8912580)
+} [5 bytes data]
+> POST /Prod/rest-api HTTP/2
+> Host: dsptg9q9hb.execute-api.us-east-2.amazonaws.com
+> User-Agent: curl/7.58.0
+> Accept: */*
+> Content-Type:application/something-else
+> 
+{ [5 bytes data]
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+} [5 bytes data]
+< HTTP/2 400 
+< content-type: application/json
+< content-length: 27
+< date: Fri, 27 Mar 2020 07:25:18 GMT
+< x-amzn-requestid: 5c073425-7fc7-4733-9bb0-db33fbb7f33c
+< x-amz-apigw-id: KCeOtE1TiYcFrnw=
+< x-amzn-trace-id: Root=1-5e7daa5e-13bd6d5d9c353f3d88186665;Sampled=0
+< x-cache: Error from cloudfront
+< via: 1.1 f88487c9214731db4c82619c9183bf7b.cloudfront.net (CloudFront)
+< x-amz-cf-pop: IAD89-C1
+< x-amz-cf-id: 1OKGa8py0CXKkA_eJUESl5lCCbAsQNp5x4r4yxn2ZOovVC7Go7rSnw==
+< 
+{ [27 bytes data]
+100    27  100    27    0     0     66      0 --:--:-- --:--:-- --:--:--    66
+* Connection #0 to host dsptg9q9hb.execute-api.us-east-2.amazonaws.com left intact
+Unable to find Content-Type

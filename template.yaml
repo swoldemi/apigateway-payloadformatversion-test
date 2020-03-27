@@ -1,0 +1,104 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Api:
+    Cors:
+      AllowHeaders: "'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization'"
+      AllowOrigin: "'*'"
+
+Resources:
+  GatewayTestExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  APILogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: APILogGroup
+
+  HTTPAPI:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      AccessLogSettings: # v2: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-stage-accesslogsettings.html
+        DestinationArn: !GetAtt APILogGroup.Arn
+        Format: '{"requestId":"$context.requestId", "ip":"$context.identity.sourceIp", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength"}'
+      StageName: Prod
+
+  RESTAPI:
+    Type: AWS::Serverless::Api
+    Properties:
+      AccessLogSetting: # v1: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigateway-stage-accesslogsetting.html
+        DestinationArn: !GetAtt APILogGroup.Arn
+        Format: '{"requestId":"$context.requestId", "ip":"$context.identity.sourceIp", "requestTime":"$context.requestTime", "httpMethod":"$context.httpMethod", "status":"$context.status", "protocol":"$context.protocol", "responseLength":"$context.responseLength"}'
+      StageName: Prod
+
+  GatewayTestFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: testfunction
+      Handler: main
+      Runtime: go1.x
+      MemorySize: 128
+      Role: !GetAtt GatewayTestExecutionRole.Arn
+      Timeout: 15
+      Events:
+        HTTPApiEvent:
+          Type: HttpApi
+          Properties:
+            Path: /http-api
+            Method: post
+            ApiId: !Ref HTTPAPI
+        RestApiEvent:
+          Type: Api
+          Properties:
+            Path: /rest-api
+            Method: post
+            RestApiId: !Ref RESTAPI
+
+  ConfigAPIGatewayLambdaInvoke:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref GatewayTestFunction
+      Principal: apigateway.amazonaws.com
+
+  ApiGwAccountConfig:
+    Type: "AWS::ApiGateway::Account"
+    Properties:
+      CloudWatchRoleArn: !GetAtt "ApiGatewayLoggingRole.Arn"
+
+  ApiGatewayLoggingRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - "apigateway.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Path: "/"
+      ManagedPolicyArns:
+        - !Sub "arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+
+Outputs:
+  HTTPAPIGatewayEndpoint:
+    Description: "HTTP API invocation URL"
+    Value: !Sub "https://${HTTPAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/http-api"
+
+  RESTAPIGatewayEndpoint:
+    Description: "REST API invocation URL"
+    Value: !Sub "https://${HTTPAPI}.execute-api.${AWS::Region}.amazonaws.com/Prod/rest-api"
